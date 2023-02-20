@@ -9,12 +9,16 @@ http://help.sentiment140.com/for-students/
 
 **Fast way to do this as I see it is a direct import into sql.**
 
-*Note: I looked at other methods i.e chunking the file using Python and Pandas, but found it to be slow and because I am using a Docker image of mysql I was getting hindered by security issues with the instance (below error).*
+*Note: I looked at other methods i.e chunking the file using Python and Pandas, but found it to be slow and because I am using a Docker image of mysql I was getting hindered by security issues with the instance (below error). Workround is to open this but I didn't look into it any further*
 
 `The MySQL server is running with the --secure-file-priv option so it cannot execute this statement`
 
 # Steps to get this up and running
-## Step 1 - build image
+## Step 1 - Unzip training and test data
+
+Unzip the file [trainingandtestdata.zip](./data/trainingandtestdata.zip) to `./data`
+
+## Step 2 - build image
 
 Build the docker image tagging it with "timssql"
 `docker build -t timmsql .`
@@ -26,11 +30,11 @@ The build will do the following:
 - Add the create-schema.sql file to the boot up scripts for mysql so that database gets created at run time.
 - Expose port 3306 for use.
 
-## Step 2 - run image
+## Step 3 - run image
 
 `docker run --detach --name=timmsql --publish 3306:3306 timmsql`
 
-## Step 3 - connect to the instance
+## Step 4 - connect to the instance
 
 Using either DBeaver or MySQL Workbench connect to the instance:
 - Server: `localhost`
@@ -40,7 +44,7 @@ Using either DBeaver or MySQL Workbench connect to the instance:
 
 <mark>If using DBbeaver may have to add in useSSL = false and allowPublicKeyRetrieval = true</mark>
 
-## Step 4 - Populate the staging table
+## Step 5 - Populate the staging table
 
 Option1: Run the script [load-staging.sql](./scripts/load-staging.sql)
 
@@ -48,11 +52,11 @@ Option2: You can used the python file to load staging it does same as above [pyt
 
 Timings are the same 30 - 40 seconds loadtime
 
-## Step 5 - Populate user and tweet tables
+## Step 6 - Populate user and tweet tables
 
 Run the script [populate-tables.sql](./scripts/populate-tables.sql)
 
-## Step 6 - Query data
+## Step 7 - Query data
 
 Run the script [table-selects.sql](./scripts/table-selects.sql)
 
@@ -76,8 +80,6 @@ Actual data 1600000 rows:
 - 5 - the text of the tweet (Lyx is cool)
 
 # Other notes
-
-
 
 Command to copy files into docker container:
 
