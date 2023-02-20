@@ -81,6 +81,15 @@ Actual data 1600000 rows:
 
 # Other notes
 
+## Python approach 
+
+I attempted loading the data in using python and Pandas to chunk the data. I thought this would be the best approach intially, however I changed track when I got it working it was very slow on my system also running into a few security errors in the mysql instance with *secure_file_priv* put me off as it was mission to resolve using Docker.
+My attempt using python is below:
+
+[python-loading.py](./python-loading.py)
+
+## Some useful commands I used when playing around
+
 Command to copy files into docker container:
 
 `docker cp training.1600000.processed.noemoticon.csv 638eb:/var/lib/mysql-files/`
